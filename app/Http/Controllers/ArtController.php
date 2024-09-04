@@ -48,7 +48,7 @@ class ArtController extends Controller
 
     public function show(Art $art)
     {
-        $this->authorize('view', $art);
+        // $this->authorize('view', $art);
         return view('arts.show', compact('art'));
     }
 
@@ -104,4 +104,5 @@ class ArtController extends Controller
 
         return redirect()->route('login'); // Redirect to login if not authenticated
     }
+    
 }
