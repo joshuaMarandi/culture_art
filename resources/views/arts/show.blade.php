@@ -8,8 +8,8 @@
     <p>Price: ${{ $art->price }}</p>
 
     <!-- Display the image -->
-    @if($arts->image)
-        <img src="{{ Storage::url($arts->image) }}" alt="{{ $art->title }}" class="img-fluid">
+    @if($art->image)
+    <img src="{{ asset('storage/' . $art->image) }}" alt="{{ $art->title }}" class="img-fluid">
     @else
         <p>No image available.</p>
     @endif
