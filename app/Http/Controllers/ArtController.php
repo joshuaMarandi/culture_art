@@ -7,8 +7,7 @@ namespace App\Http\Controllers;
 use App\Models\Art;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage; // Add this line
-
+use Illuminate\Support\Facades\Storage;
 
 class ArtController extends Controller
 {
@@ -88,15 +87,14 @@ class ArtController extends Controller
     }
 
     // Add this method to handle dashboard view
-    // public function dashboard()
-    // {
-    //     $arts = Auth::user()->arts; // Fetch the arts for the logged-in seller
-    //     return view('seller.dashboard', compact('arts'));
-    // }
     public function dashboard()
-{
-    $arts = Auth::user()->arts; // Fetch the arts for the logged-in seller
-    return view('seller.dashboard', compact('arts'));
-}
+    {
+        // Check if the user is authenticated
+        if (Auth::check()) {
+            $arts = Auth::user()->arts; // Fetch the arts for the logged-in seller
+            return view('seller.dashboard', compact('arts'));
+        }
 
+        return redirect()->route('login'); // Redirect to login if not authenticated
+    }
 }

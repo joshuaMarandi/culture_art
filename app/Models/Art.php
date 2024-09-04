@@ -10,8 +10,8 @@ class Art extends Model
 {
     use HasFactory;
 
-    // Specify the table name if different from 'arts'
-    // protected $table = 'arts';
+    // Ensure this line is either removed or corrected if present
+    protected $table = 'arts';
 
     // The attributes that are mass assignable
     protected $fillable = [
@@ -19,19 +19,10 @@ class Art extends Model
         'description',
         'price',
         'image',
+        'user_id', // Ensure user_id is included if you want to allow mass assignment
     ];
 
-    // If there's a relationship with the User model
-    // public function user()
-    // {
-    //     return $this->belongsTo(User::class);
-    // }
-
-    // If there's a relationship with a Category model (optional)
-    // public function category()
-    // {
-    //     return $this->belongsTo(Category::class);
-    // }
+    // Relationship with User model
     public function user()
     {
         return $this->belongsTo(User::class);
