@@ -1,7 +1,5 @@
 <?php
 
-// app/Http/Controllers/ArtController.php
-
 namespace App\Http\Controllers;
 
 use App\Models\Art;
@@ -11,9 +9,19 @@ use Illuminate\Support\Facades\Storage;
 
 class ArtController extends Controller
 {
+    public function create()
+    {
+        return view('arts.create'); // Return the view to create a new art item
+    }
     public function __construct()
     {
         $this->middleware(['auth', 'role:seller']);
+    }
+
+    public function index()
+    {
+        $arts = Auth::user()->arts; // Fetch all arts for the logged-in seller
+        return view('arts.index', compact('arts'));
     }
 
     public function store(Request $request)
@@ -32,7 +40,7 @@ class ArtController extends Controller
             'description' => $request->description,
             'price' => $request->price,
             'image' => $imagePath,
-            'user_id' => Auth::id(), // Make sure the user ID is being assigned
+            'user_id' => Auth::id(), // Assign the current user's ID
         ]);
 
         return redirect()->route('arts.index')->with('success', 'Art created successfully.');
@@ -86,7 +94,6 @@ class ArtController extends Controller
         return redirect()->route('arts.index')->with('success', 'Art deleted successfully.');
     }
 
-    // Add this method to handle dashboard view
     public function dashboard()
     {
         // Check if the user is authenticated
