@@ -44,3 +44,17 @@ Route::middleware(['auth', 'role:seller'])->group(function () {
 Route::middleware(['auth', 'role:buyer'])->group(function () {
     Route::get('/buyer/dashboard', [BuyerController::class, 'index'])->name('buyer.dashboard');
 });
+
+
+
+// Art management routes for sellers
+Route::middleware(['auth', 'role:seller'])->group(function () {
+    Route::resource('arts', ArtController::class);
+});
+
+
+// Art management routes for sellers
+Route::middleware(['auth', 'role:seller'])->group(function () {
+    Route::get('/seller/dashboard', [ArtController::class, 'dashboard'])->name('seller.dashboard');
+    Route::resource('arts', ArtController::class)->except(['index']); // Exclude index if you use the dashboard method for listing arts
+});

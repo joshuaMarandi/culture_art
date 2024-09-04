@@ -22,14 +22,18 @@ class Art extends Model
     ];
 
     // If there's a relationship with the User model
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+    // public function user()
+    // {
+    //     return $this->belongsTo(User::class);
+    // }
 
     // If there's a relationship with a Category model (optional)
     // public function category()
     // {
     //     return $this->belongsTo(Category::class);
     // }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

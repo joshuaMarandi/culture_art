@@ -21,4 +21,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function arts()
+{
+    return $this->hasMany(Art::class);
+}
 }
