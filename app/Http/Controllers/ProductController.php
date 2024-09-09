@@ -21,4 +21,12 @@ class ProductController extends Controller
         // Pass the data to the view
         return view('seller.landing', compact('seller', 'arts'));
     }
+    public function showBuyerLanding(Request $request)
+    {
+        // Fetch artworks from the database
+        $arts = Art::all();
+
+        return view('buyer.landing', compact('arts'));
+    }
+
 }

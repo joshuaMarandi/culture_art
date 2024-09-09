@@ -8,9 +8,17 @@
         <p class="text-lg text-gray-600">Browse the best artwork available from {{ $seller->name }}.</p>
     </div>
 
+    <!-- Search Bar -->
+    <div class="mb-6">
+        <form action="{{ route('buyer.page') }}" method="GET" class="flex items-center">
+            <input type="text" name="query" placeholder="Search artworks..." class="border border-gray-300 rounded py-2 px-4 w-full md:w-1/2 lg:w-1/3">
+            <button type="submit" class="ml-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Search</button>
+        </form>
+    </div>
+
     <!-- Products Section -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        @foreach($arts as $art)
+        @forelse($arts as $art)
             <div class="bg-white rounded-lg shadow-lg overflow-hidden">
                 <!-- Art Image -->
                 <div class="aspect-w-1 aspect-h-1">
@@ -33,12 +41,9 @@
                     </a>
                 </div>
             </div>
-        @endforeach
+        @empty
+            <p class="text-center text-gray-600 mt-12">No artworks added yet.</p>
+        @endforelse
     </div>
-
-    <!-- No products message -->
-    @if($arts->isEmpty())
-        <p class="text-center text-gray-600 mt-12">No artworks added yet.</p>
-    @endif
 </div>
 @endsection

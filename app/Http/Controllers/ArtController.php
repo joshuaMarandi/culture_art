@@ -9,13 +9,15 @@ use Illuminate\Support\Facades\Storage;
 
 class ArtController extends Controller
 {
+    // Constructor with authentication middleware for non-public methods
+    public function __construct()
+    {
+        $this->middleware(['auth', 'role:seller'])->except(['showBuyerLanding', 'show']);
+    }
+
     public function create()
     {
         return view('arts.create'); // Return the view to create a new art item
-    }
-    public function __construct()
-    {
-        $this->middleware(['auth', 'role:seller']);
     }
 
     public function index()
@@ -48,7 +50,7 @@ class ArtController extends Controller
 
     public function show(Art $art)
     {
-        // $this->authorize('view', $art);
+        // Allow viewing of an individual art piece
         return view('arts.show', compact('art'));
     }
 
@@ -104,5 +106,13 @@ class ArtController extends Controller
 
         return redirect()->route('login'); // Redirect to login if not authenticated
     }
-    
+
+    // Method to show the buyer landing page
+    public function showBuyerLanding(Request $request)
+    {
+        // Fetch all artworks
+        $arts = Art::all();
+
+        return view('buyer.landing', compact('arts'));
+    }
 }

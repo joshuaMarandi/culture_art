@@ -61,8 +61,10 @@ Route::middleware(['auth', 'role:seller'])->group(function () {
     Route::resource('arts', ArtController::class)->except(['index']); // Exclude index if you use the dashboard method for listing arts
 });
 
-Route::get('/seller/{sellerId}', [ProductController::class, 'showSellerPage'])->name('seller.page');
+Route::get('/buyer', [ProductController::class, 'showBuyerPage'])->name('buyer.page');
 
+// routes/web.php
 
-// web.php
-Route::get('/seller/{sellerId}', [ProductController::class, 'showSellerPage'])->name('seller.page');
+// Define the route for the buyer landing page without authentication middleware
+Route::get('/buyer/landing', [ArtController::class, 'showBuyerLanding'])->name('buyer.landing');
+
