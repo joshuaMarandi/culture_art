@@ -12,7 +12,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ $art->title }}</h5>
                         <p class="card-text">{{ $art->description }}</p>
-                        <p class="card-text"><strong>${{ $art->price }}</strong></p>
+                        <p class="card-text"><strong>Tsh {{ $art->price }}</strong></p>
                         <a href="{{ route('arts.show', $art) }}" class="btn btn-primary">View</a>
                         <a href="{{ route('arts.edit', $art) }}" class="btn btn-secondary">Edit</a>
                         <form action="{{ route('arts.destroy', $art) }}" method="POST" class="d-inline-block">

@@ -5,7 +5,7 @@
 <div class="container">
     <h1>{{ $art->title }}</h1>
     <p>{{ $art->description }}</p>
-    <p>Price: ${{ $art->price }}</p>
+    <p>Price: Tsh {{ $art->price }}</p>
 
     <!-- Display the image -->
     @if($art->image)

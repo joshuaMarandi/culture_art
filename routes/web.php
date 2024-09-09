@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SellerController;
 use App\Http\Controllers\BuyerController;
+use App\Http\Controllers\ProductController;
+
 
 
 /*
@@ -19,7 +21,7 @@ use App\Http\Controllers\BuyerController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Auth::routes();
@@ -58,3 +60,9 @@ Route::middleware(['auth', 'role:seller'])->group(function () {
     Route::get('/seller/dashboard', [ArtController::class, 'dashboard'])->name('seller.dashboard');
     Route::resource('arts', ArtController::class)->except(['index']); // Exclude index if you use the dashboard method for listing arts
 });
+
+Route::get('/seller/{sellerId}', [ProductController::class, 'showSellerPage'])->name('seller.page');
+
+
+// web.php
+Route::get('/seller/{sellerId}', [ProductController::class, 'showSellerPage'])->name('seller.page');
