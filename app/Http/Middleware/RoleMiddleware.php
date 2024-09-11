@@ -24,4 +24,5 @@ class RoleMiddleware
 
         return redirect('/home'); // Redirect to a default route if unauthorized
     }
+    
 }

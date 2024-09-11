@@ -6,11 +6,6 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SellerController;
 use App\Http\Controllers\BuyerController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\CartController;
-
-
-// routes/web.php
-
 
 
 
@@ -84,10 +79,3 @@ Route::middleware(['auth'])->group(function () {
 
 // Public route for viewing art details
 Route::get('/arts/{id}', [ArtController::class, 'show'])->name('arts.show');
-
-
-Route::get('/buyer/view_product/{id}', [ProductController::class, 'show'])->name('buyer.view_product');
-
-Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
-
-Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');

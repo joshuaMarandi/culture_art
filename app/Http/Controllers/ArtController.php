@@ -2,117 +2,87 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Art;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
+use App\Models\Art;
 
 class ArtController extends Controller
 {
-    // Constructor with authentication middleware for non-public methods
-    public function __construct()
-    {
-        $this->middleware(['auth', 'role:seller'])->except(['showBuyerLanding', 'show']);
-    }
-
-    public function create()
-    {
-        return view('arts.create'); // Return the view to create a new art item
-    }
-
+    // Display a listing of arts (publicly accessible)
     public function index()
     {
-        $arts = Auth::user()->arts; // Fetch all arts for the logged-in seller
+        $arts = Art::all(); // Fetch all art records
         return view('arts.index', compact('arts'));
+    }
+
+    // Show the details of a specific art piece (publicly accessible)
+    public function show($id)
+    {
+        $art = Art::findOrFail($id); // Find the art by ID or fail
+        return view('arts.show', compact('art')); // Pass the art data to the view
+    }
+
+    // Show the buyer landing page (publicly accessible)
+    public function showBuyerLanding()
+    {
+        $arts = Art::all(); // Fetch all arts for the landing page
+        return view('buyer.landing', compact('arts'));
+    }
+
+    // Seller dashboard (protected by 'seller' role)
+    public function dashboard()
+    {
+        $arts = Art::where('user_id', auth()->id())->get(); // Fetch only arts from the logged-in seller
+        return view('seller.dashboard', compact('arts'));
+    }
+
+    // Other methods for sellers to create, update, and delete art
+    public function create()
+    {
+        return view('arts.create');
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
+        $validatedData = $request->validate([
+            'title' => 'required',
+            'description' => 'required',
             'price' => 'required|numeric',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'required|image',
         ]);
 
-        $imagePath = $request->file('image')->store('arts', 'public');
+        $art = new Art($validatedData);
+        $art->user_id = auth()->id(); // Assign the current seller to the art piece
+        $art->save();
 
-        Art::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'price' => $request->price,
-            'image' => $imagePath,
-            'user_id' => Auth::id(), // Assign the current user's ID
-        ]);
-
-        return redirect()->route('arts.index')->with('success', 'Art created successfully.');
+        return redirect()->route('seller.dashboard')->with('success', 'Art created successfully');
     }
 
-    public function show(Art $art)
+    public function edit($id)
     {
-        // Allow viewing of an individual art piece
-        return view('arts.show', compact('art'));
-    }
-
-    public function edit(Art $art)
-    {
-        $this->authorize('update', $art);
+        $art = Art::findOrFail($id);
         return view('arts.edit', compact('art'));
     }
 
-    public function update(Request $request, Art $art)
+    public function update(Request $request, $id)
     {
-        $this->authorize('update', $art);
-
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
+        $validatedData = $request->validate([
+            'title' => 'required',
+            'description' => 'required',
             'price' => 'required|numeric',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'nullable|image',
         ]);
 
-        if ($request->hasFile('image')) {
-            Storage::disk('public')->delete($art->image);
-            $imagePath = $request->file('image')->store('arts', 'public');
-            $art->image = $imagePath;
-        }
+        $art = Art::findOrFail($id);
+        $art->update($validatedData);
 
-        $art->update([
-            'title' => $request->title,
-            'description' => $request->description,
-            'price' => $request->price,
-            'image' => $art->image,
-        ]);
-
-        return redirect()->route('arts.index')->with('success', 'Art updated successfully.');
+        return redirect()->route('seller.dashboard')->with('success', 'Art updated successfully');
     }
 
-    public function destroy(Art $art)
+    public function destroy($id)
     {
-        $this->authorize('delete', $art);
-
-        Storage::disk('public')->delete($art->image);
+        $art = Art::findOrFail($id);
         $art->delete();
-        return redirect()->route('arts.index')->with('success', 'Art deleted successfully.');
-    }
 
-    public function dashboard()
-    {
-        // Check if the user is authenticated
-        if (Auth::check()) {
-            $arts = Auth::user()->arts; // Fetch the arts for the logged-in seller
-            return view('seller.dashboard', compact('arts'));
-        }
-
-        return redirect()->route('login'); // Redirect to login if not authenticated
-    }
-
-    // Method to show the buyer landing page
-    public function showBuyerLanding(Request $request)
-    {
-        // Fetch all artworks
-        $arts = Art::all();
-
-        return view('buyer.landing', compact('arts'));
+        return redirect()->route('seller.dashboard')->with('success', 'Art deleted successfully');
     }
 }

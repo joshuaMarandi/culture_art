@@ -27,4 +27,12 @@ class Art extends Model
     {
         return $this->belongsTo(User::class,'user_id');
     }
+    public function reviews()
+    {
+        return $this->hasMany(Review::class); // Adjust the class name if your review model is named differently
+    }
+
+    /**
+     * Get the category that owns the art.
+     */
 }
