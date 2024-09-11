@@ -15,7 +15,7 @@
             <h1>{{ $product->name }}</h1>
             <h3>Description</h3>
             <p>{{ $product->description }}</p>
-            <h3>Price: ${{ number_format($product->price, 2) }}</h3>
+            <h3>Price: Tsh {{ number_format($product->price, 2) }}</h3>
             
             <!-- Add to Cart Button -->
             <form action="{{ route('cart.add', $product->id) }}" method="POST">
@@ -60,7 +60,7 @@
                             <img src="{{ asset('storage/' . $relatedProduct->image) }}" class="card-img-top" alt="{{ $relatedProduct->name }}">
                             <div class="card-body">
                                 <h5 class="card-title">{{ $relatedProduct->name }}</h5>
-                                <p class="card-text">Price: ${{ number_format($relatedProduct->price, 2) }}</p>
+                                <p class="card-text">Price: Tsh {{ number_format($relatedProduct->price, 2) }}</p>
                                 <a href="{{ route('product.show', $relatedProduct->id) }}" class="btn btn-primary">View Details</a>
                             </div>
                         </div>
