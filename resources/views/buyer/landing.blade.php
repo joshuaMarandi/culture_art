@@ -20,7 +20,7 @@
         @foreach($arts as $art)
             <div class="product-card">
                 <!-- Art Image -->
-                <div class="product-image">
+                <div class="product-img">
                     @if($art->image)
                         <img src="{{ asset('storage/' . $art->image) }}" alt="{{ $art->title }}">
                     @else
@@ -33,7 +33,7 @@
                 <!-- Art Info -->
                 <div class="product-info">
                     <h2>{{ $art->title }}</h2>
-                    <p>{{ Str::limit($art->description, 50) }}</p>
+                    <p>{{ Str::limit($art->description, 80) }}</p> <!-- Increased the description limit -->
                     <p class="price">Tsh {{ number_format($art->price, 2) }}</p>
                     <a href="{{ route('arts.show', $art->id) }}">View Details</a>
                 </div>
@@ -59,12 +59,14 @@
         function hideAllSlides() {
             slides.forEach((slide) => {
                 slide.classList.remove('active');
+                slide.style.left = '100%';  // Move slides off-screen by default
             });
         }
 
         function showSlide(index) {
             hideAllSlides();
             slides[index].classList.add('active');
+            slides[index].style.left = '0';  // Position current slide correctly
         }
 
         function nextSlide() {
