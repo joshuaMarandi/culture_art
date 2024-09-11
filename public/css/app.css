@@ -1,6 +1,6 @@
 /* Container styles */
 .container {
-    max-width: 1200px;
+    max-width: 120px;
     margin: 0 auto;
     padding: 20px;
 }
@@ -63,8 +63,8 @@
 
 /* Product Image */
 .product-image {
-    width: 100%;
-    height: 250px;
+    width: 50%;
+    height: 20px;
     overflow: hidden;
     display: flex;
     justify-content: center;
@@ -72,8 +72,8 @@
 }
 
 .product-image img {
-    width: 100%;
-    height: 100%;
+    width: 10%;
+    height: 10%;
     object-fit: cover;
 }
 

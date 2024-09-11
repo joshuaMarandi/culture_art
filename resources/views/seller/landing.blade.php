@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@vite(['resources/css/app.css', 'resources/js/app.js'])
 @section('content')
 <div class="container mx-auto px-6 py-12">
     <!-- Seller Details Section -->
