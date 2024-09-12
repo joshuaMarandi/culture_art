@@ -96,3 +96,5 @@ Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
 
 // routes/web.php
 Route::post('/products/{product}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+
+
