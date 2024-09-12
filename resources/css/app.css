@@ -47,7 +47,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* More space for bigger cards */
     gap: 30px; /* Increased gap for breathing space */
-    padding: 20px 0;
+    padding: 20px 0;    
 }
 
 /* Product Card Styles */
@@ -311,4 +311,7 @@
     .search-bar-input {
         width: 80%;
     }
+}
+.a{
+    text-decoration: none;
 }
