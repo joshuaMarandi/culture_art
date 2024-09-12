@@ -41,17 +41,24 @@ class ArtController extends Controller
         return view('arts.create');
     }
 
+    // Store new art with image upload
     public function store(Request $request)
     {
         $validatedData = $request->validate([
             'title' => 'required',
             'description' => 'required',
             'price' => 'required|numeric',
-            'image' => 'required|image',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Ensure valid image
         ]);
+
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('arts_images', 'public'); // Store image in the public disk
+        }
 
         $art = new Art($validatedData);
         $art->user_id = auth()->id(); // Assign the current seller to the art piece
+        $art->image = $imagePath; // Save the image path in the database
         $art->save();
 
         return redirect()->route('seller.dashboard')->with('success', 'Art created successfully');
@@ -63,16 +70,24 @@ class ArtController extends Controller
         return view('arts.edit', compact('art'));
     }
 
+    // Update existing art with image upload
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
             'title' => 'required',
             'description' => 'required',
             'price' => 'required|numeric',
-            'image' => 'nullable|image',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048' // Image is optional during update
         ]);
 
         $art = Art::findOrFail($id);
+
+        // Handle image upload if a new one is provided
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('arts_images', 'public'); // Store new image
+            $validatedData['image'] = $imagePath; // Save the new image path
+        }
+
         $art->update($validatedData);
 
         return redirect()->route('seller.dashboard')->with('success', 'Art updated successfully');

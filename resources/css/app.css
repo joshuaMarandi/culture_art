@@ -49,6 +49,15 @@
     gap: 30px; /* Increased gap for breathing space */
     padding: 20px 0;    
 }
+/* Add this to your stylesheet */
+.products-grid a {
+    text-decoration: none; /* Removes underline */
+    color: inherit; /* Keeps the text color same as parent */
+}
+
+.products-grid a:hover {
+    text-decoration: none; /* Ensure it stays non-underlined on hover */
+}
 
 /* Product Card Styles */
 .product-card {
@@ -314,4 +323,14 @@
 }
 .a{
     text-decoration: none;
+}
+
+
+.new{
+    width: 40%;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
 }

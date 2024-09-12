@@ -62,38 +62,5 @@
 </div>
 @endsection
 
-@push('scripts')
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var slider = document.querySelector('.slider');
-        var slides = slider.querySelectorAll('.slide');
-        var currentIndex = 0;
 
-        function hideAllSlides() {
-            slides.forEach((slide) => {
-                slide.classList.remove('active');
-                slide.style.left = '100%';  // Move slides off-screen by default
-            });
-        }
 
-        function showSlide(index) {
-            hideAllSlides();
-            slides[index].classList.add('active');
-            slides[index].style.left = '0';  // Position current slide correctly
-        }
-
-        function nextSlide() {
-            currentIndex = (currentIndex + 1) % slides.length;
-            showSlide(currentIndex);
-        }
-
-        function prevSlide() {
-            currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-            showSlide(currentIndex);
-        }
-
-        showSlide(currentIndex);
-        setInterval(nextSlide, 5000); // Change slide every 5 seconds
-    });
-</script>
-@endpush

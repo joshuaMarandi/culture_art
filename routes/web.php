@@ -7,6 +7,7 @@ use App\Http\Controllers\SellerController;
 use App\Http\Controllers\BuyerController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\ReviewController;
 
 
 // routes/web.php
@@ -91,3 +92,7 @@ Route::get('/buyer/view_product/{id}', [ProductController::class, 'show'])->name
 Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
 
 Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
+
+
+// routes/web.php
+Route::post('/products/{product}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
