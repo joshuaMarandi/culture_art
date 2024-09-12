@@ -8,6 +8,8 @@ use App\Http\Controllers\BuyerController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\LogoutController;
 
 
 // routes/web.php
@@ -98,3 +100,19 @@ Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
 Route::post('/products/{product}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 
 
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
+});
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+});
+
+
+
+// Update the logout route to use the custom controller
+Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');

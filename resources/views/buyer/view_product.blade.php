@@ -30,6 +30,7 @@
         <div class="col-12">
             <h3>Customer Reviews</h3>
 
+        
             <!-- Display reviews if any -->
             @if($product->reviews && $product->reviews->isNotEmpty())
                 <ul class="list-unstyled"> 
