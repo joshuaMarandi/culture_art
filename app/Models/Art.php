@@ -35,4 +35,9 @@ class Art extends Model
     /**
      * Get the category that owns the art.
      */
+    public function category()
+{
+    return $this->belongsTo(Category::class);
+}
+
 }
