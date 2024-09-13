@@ -1,9 +1,10 @@
-<?php
+<?php 
 
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Art;
+use App\Models\Category; // Add this line
 
 class ArtController extends Controller
 {
@@ -35,10 +36,11 @@ class ArtController extends Controller
         return view('seller.dashboard', compact('arts'));
     }
 
-    // Other methods for sellers to create, update, and delete art
+    // Display the form for creating new art
     public function create()
     {
-        return view('arts.create');
+        $categories = Category::all(); // Fetch all categories
+        return view('arts.create', compact('categories')); // Pass categories to the view
     }
 
     // Store new art with image upload
@@ -48,6 +50,7 @@ class ArtController extends Controller
             'title' => 'required',
             'description' => 'required',
             'price' => 'required|numeric',
+            'category_id' => 'required|exists:categories,id', // Validate category
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Ensure valid image
         ]);
 
@@ -64,10 +67,12 @@ class ArtController extends Controller
         return redirect()->route('seller.dashboard')->with('success', 'Art created successfully');
     }
 
+    // Display the form for editing the specified art
     public function edit($id)
     {
         $art = Art::findOrFail($id);
-        return view('arts.edit', compact('art'));
+        $categories = Category::all(); // Fetch all categories
+        return view('arts.edit', compact('art', 'categories')); // Pass categories to the view
     }
 
     // Update existing art with image upload
@@ -77,6 +82,7 @@ class ArtController extends Controller
             'title' => 'required',
             'description' => 'required',
             'price' => 'required|numeric',
+            'category_id' => 'required|exists:categories,id', // Validate category
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048' // Image is optional during update
         ]);
 
@@ -93,6 +99,7 @@ class ArtController extends Controller
         return redirect()->route('seller.dashboard')->with('success', 'Art updated successfully');
     }
 
+    // Delete the specified art
     public function destroy($id)
     {
         $art = Art::findOrFail($id);

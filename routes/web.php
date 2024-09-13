@@ -116,3 +116,7 @@ Route::middleware(['auth'])->group(function () {
 
 // Update the logout route to use the custom controller
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
+
+//adding art
+Route::get('/art/create', [ProductController::class, 'create'])->name('art.create');
+Route::post('/art', [ProductController::class, 'store'])->name('art.store');

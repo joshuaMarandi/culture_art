@@ -19,6 +19,7 @@ class Art extends Model
         'description',
         'price',
         'image',
+        'category_id',
         'user_id', // Ensure user_id is included if you want to allow mass assignment
     ];
 
