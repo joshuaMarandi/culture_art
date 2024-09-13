@@ -20,7 +20,7 @@
         <!-- Title Field -->
         <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" name="title" id="name" class="form-control" value="{{ old('name') }}" required>
+            <input type="text" name="title" id="title" class="form-control" value="{{ old('name') }}" required>
         </div>
 
         <!-- Description Field -->

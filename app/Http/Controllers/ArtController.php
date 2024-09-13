@@ -56,7 +56,7 @@ class ArtController extends Controller
 
         // Handle image upload
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('arts_images', 'public'); // Store image in the public disk
+            $imagePath = $request->file('image')->store('arts', 'public'); // Store image in the public disk
         }
 
         $art = new Art($validatedData);
