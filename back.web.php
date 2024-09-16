@@ -81,4 +81,4 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/arts/{id}', [ArtController::class, 'show'])->name('arts.show');
 
 
-Route::get('/arts/{id}', [ArtController::class, 'show'])->name('arts.show');
+
