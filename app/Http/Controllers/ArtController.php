@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Art;
 use App\Models\Category;
+use Illuminate\Support\Facades\Storage;
 
 class ArtController extends Controller
 {
@@ -16,8 +17,8 @@ class ArtController extends Controller
         // Fetch arts based on category_id if provided, otherwise fetch all
         // Eager load the category to avoid N+1 query problem
         $arts = $categoryId ? 
-            Art::where('category_id', $categoryId)->with('category')->paginate(10) : 
-            Art::with('category')->paginate(10);
+            Art::where('category_id', $categoryId)->with('category')->paginate(20) : 
+            Art::with('category')->paginate(20);
         
         return view('arts.index', compact('arts'));
     }
@@ -34,7 +35,7 @@ class ArtController extends Controller
     public function showBuyerLanding()
     {
         // Fetch all arts with their related category data and paginate results
-        $arts = Art::with('category')->paginate(12);
+        $arts = Art::with('category')->paginate(20);
         
         return view('buyer.landing', compact('arts'));
     }
@@ -66,6 +67,7 @@ class ArtController extends Controller
         ]);
 
         // Handle image upload
+        $imagePath = null;
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('arts', 'public'); // Store image in the public disk
         }
@@ -101,6 +103,11 @@ class ArtController extends Controller
 
         // Handle image upload if a new one is provided
         if ($request->hasFile('image')) {
+            // Delete the old image if it exists
+            if ($art->image) {
+                Storage::disk('public')->delete($art->image);
+            }
+
             $imagePath = $request->file('image')->store('arts', 'public'); // Store new image
             $validatedData['image'] = $imagePath; // Save the new image path
         }
@@ -114,6 +121,12 @@ class ArtController extends Controller
     public function destroy($id)
     {
         $art = Art::findOrFail($id);
+
+        // Delete the associated image from storage
+        if ($art->image) {
+            Storage::disk('public')->delete($art->image);
+        }
+
         $art->delete();
 
         return redirect()->route('seller.dashboard')->with('success', 'Art deleted successfully');
