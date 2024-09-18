@@ -48,4 +48,10 @@ class User extends Authenticatable
     {
         return $this->role === $role;
     }
+    // In User.php model
+public function getIsAdminAttribute()
+{
+    return $this->role === 'admin'; // Adjust based on your role setup
+}
+
 }
