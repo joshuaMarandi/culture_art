@@ -79,3 +79,6 @@ Route::middleware(['auth'])->group(function () {
 
 // Public route for viewing art details
 Route::get('/arts/{id}', [ArtController::class, 'show'])->name('arts.show');
+
+
+
