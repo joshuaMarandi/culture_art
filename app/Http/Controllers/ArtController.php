@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers;
 
@@ -14,7 +14,10 @@ class ArtController extends Controller
         $categoryId = $request->input('category_id');
         
         // Fetch arts based on category_id if provided, otherwise fetch all
-        $arts = $categoryId ? Art::where('category_id', $categoryId)->get() : Art::all();
+        // Eager load the category to avoid N+1 query problem
+        $arts = $categoryId ? 
+            Art::where('category_id', $categoryId)->with('category')->paginate(10) : 
+            Art::with('category')->paginate(10);
         
         return view('arts.index', compact('arts'));
     }
@@ -22,15 +25,16 @@ class ArtController extends Controller
     // Show the details of a specific art piece (publicly accessible)
     public function show($id)
     {
-        $art = Art::findOrFail($id);
+        // Eager load category with the art
+        $art = Art::with('category')->findOrFail($id);
         return view('arts.show', compact('art'));
     }
 
     // Show the buyer landing page (publicly accessible)
     public function showBuyerLanding()
     {
-        // Fetch all arts with their related category data
-        $arts = Art::with('category')->get();
+        // Fetch all arts with their related category data and paginate results
+        $arts = Art::with('category')->paginate(12);
         
         return view('buyer.landing', compact('arts'));
     }
@@ -38,7 +42,8 @@ class ArtController extends Controller
     // Seller dashboard (protected by 'seller' role)
     public function dashboard()
     {
-        $arts = Art::where('user_id', auth()->id())->get();
+        // Fetch arts for the authenticated seller, eager load categories
+        $arts = Art::where('user_id', auth()->id())->with('category')->get();
         return view('seller.dashboard', compact('arts'));
     }
 
