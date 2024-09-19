@@ -25,9 +25,7 @@
     <h2 class="text-center my-4">Browse Our Collection</h2>
 
     <!-- No products message -->
-    @if($arts->isEmpty())
-        <p class="no-products text-center">No artworks available at the moment. Please check back later.</p>
-    @else
+    @if($arts && $arts->isNotEmpty())
         <div class="products-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 my-4">
             @foreach($arts as $art)
             <a href="{{ route('buyer.view_product', $art->id) }}" class="block product-link hover:shadow-lg transition duration-300 ease-in-out">
