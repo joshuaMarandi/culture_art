@@ -148,4 +148,6 @@ Route::get('/', function () {
     return view('buyer/landing');
 });
 
+// In routes/web.php
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
