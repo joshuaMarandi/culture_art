@@ -127,3 +127,25 @@ Route::get('/buyer/landing', [ProductController::class, 'showBuyerLanding'])->na
 
 
 Auth::routes(); // This registers the login, register, logout, etc.
+
+
+
+
+
+// Admin dashboard route
+Route::middleware(['auth', 'is_admin'])->group(function () {
+    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+});
+
+// Ensure logout is handled
+Route::post('/logout', function () {
+    Auth::logout();
+    return redirect('/');
+})->name('logout');
+
+// Homepage route for guests
+Route::get('/', function () {
+    return view('buyer/landing');
+});
+
+
