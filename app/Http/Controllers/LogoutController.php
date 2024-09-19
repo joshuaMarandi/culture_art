@@ -7,12 +7,14 @@ use Illuminate\Support\Facades\Auth;
 
 class LogoutController extends Controller
 {
+
     public function logout(Request $request)
     {
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-
-        return redirect('/buyer/landing'); // Redirect to the desired URL
+    
+        return redirect()->route('buyer.landing'); // Ensure this is the correct route
     }
+    
 }
