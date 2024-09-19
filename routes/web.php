@@ -124,3 +124,6 @@ Route::post('/art', [ProductController::class, 'store'])->name('art.store');
 
 // Route for the buyer landing page
 Route::get('/buyer/landing', [ProductController::class, 'showBuyerLanding'])->name('buyer.landing');
+
+
+Auth::routes(); // This registers the login, register, logout, etc.
