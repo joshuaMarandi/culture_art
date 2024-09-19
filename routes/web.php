@@ -10,6 +10,8 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\AuthenticatedSessionController;
+
 
 
 // routes/web.php
