@@ -18,17 +18,22 @@ class AdminController extends Controller
 
     public function dashboard()
     {
+        // Count total users, artworks, and bids
         $totalUsers = User::count();
         $totalArtworks = Art::count();
         $totalBids = Bid::count();
         
         // Calculate total sales from the Sale model
-        $totalSales = Sale::sum('amount');
+        $totalSales = Sale::sum('amount'); // Adjust the 'amount' field based on your schema
 
+        // Fetch the most recent activities (if available)
         $recentActivities = Activity::latest()->limit(5)->get(); 
-        $artworks = Art::all();
+        
+        // Fetch all artworks and users
+        $arts = Art::all();
         $users = User::all();
 
-        return view('admin.dashboard', compact('totalUsers', 'totalArtworks', 'totalBids', 'totalSales', 'recentActivities', 'artworks', 'users'));
+        // Pass data to the view
+        return view('admin.dashboard', compact('totalUsers', 'totalArtworks', 'totalBids', 'totalSales', 'recentActivities', 'arts', 'users'));
     }
 }
