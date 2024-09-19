@@ -4,6 +4,7 @@
 
 @section('content')
 <div class="container">
+
     <!-- Hero Section -->
     <div class="hero-section">
         <div class="hero-overlay">
@@ -20,12 +21,13 @@
         </div>
     </div>
 
-    
     <!-- Products Grid Section -->
     <h2 class="text-center my-4">Browse Our Collection</h2>
 
     <!-- No products message -->
-    @if(isset($arts) && $arts->isNotEmpty())
+    @if($arts->isEmpty())
+        <p class="no-products text-center">No artworks available at the moment. Please check back later.</p>
+    @else
         <div class="products-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 my-4">
             @foreach($arts as $art)
             <a href="{{ route('buyer.view_product', $art->id) }}" class="block product-link hover:shadow-lg transition duration-300 ease-in-out">
@@ -57,8 +59,6 @@
         <div class="pagination-container my-4">
             {{ $arts->onEachSide(1)->links('vendor.pagination.simple-tailwind') }} <!-- Custom template -->
         </div>
-    @else
-        <p>No artworks available.</p>
     @endif
 
 </div>
