@@ -32,13 +32,17 @@ class ArtController extends Controller
     }
 
     // Show the buyer landing page (publicly accessible)
-    public function showBuyerLanding()
-    {
-        // Fetch all arts with their related category data and paginate results
-        $arts = Art::with('category')->paginate(20);
-        
-        return view('buyer.landing', compact('arts'));
-    }
+   // ArtController.php
+public function showBuyerLanding()
+{
+    // Fetch all arts with related category data and paginate results
+    $arts = Art::with('category')->paginate(20); // Fetch 20 records per page
+    
+    // Pass the seller details if needed
+    $seller = auth()->user();
+
+    return view('buyer.landing', compact('arts', 'seller'));
+}
 
     // Seller dashboard (protected by 'seller' role)
     public function dashboard()
@@ -65,6 +69,7 @@ class ArtController extends Controller
             'category_id' => 'required|exists:categories,id',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
+
 
         // Handle image upload
         $imagePath = null;
