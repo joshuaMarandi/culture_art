@@ -3,6 +3,7 @@
 @section('content')
 <div class="container mx-auto px-6 py-12">
     <!-- Seller Details Section -->
+     <!-- future is exiting -->
     <div class="flex flex-col items-center mb-12">
         <h1 class="text-4xl font-bold text-center mb-4">Welcome to {{ $seller->name }}'s Store</h1>
         <p class="text-lg text-gray-600">Browse the best artwork available from {{ $seller->name }}.</p>
