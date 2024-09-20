@@ -10,18 +10,16 @@ use Illuminate\Support\Facades\Storage;
 class ArtController extends Controller
 {
     // Display a listing of arts (publicly accessible)
-    public function index(Request $request)
-    {
-        $categoryId = $request->input('category_id');
-        
-        // Fetch arts based on category_id if provided, otherwise fetch all
-        // Eager load the category to avoid N+1 query problem
-        $arts = $categoryId ? 
-            Art::where('category_id', $categoryId)->with('category')->paginate(20) : 
-            Art::with('category')->paginate(20);
-        
-        return view('arts.index', compact('arts'));
-    }
+    public function showBuyerLanding()
+{
+    // Fetch arts with pagination
+    $arts = Art::with('category')->paginate(20);  // or adjust per your needs
+
+    // Pass the 'arts' variable to the view
+    return view('buyer.landing', compact('arts'));
+}
+
+    
 
     // Show the details of a specific art piece (publicly accessible)
     public function show($id)

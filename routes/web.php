@@ -131,6 +131,7 @@ Route::get('/buyer/landing', [ProductController::class, 'showBuyerLanding'])->na
 Auth::routes(); // This registers the login, register, logout, etc.
 
 
+Route::get('/arts', [ArtController::class, 'index'])->name('arts.index');
 
 
 
@@ -152,4 +153,7 @@ Route::get('/', function () {
 
 // In routes/web.php
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+
+// Route for buyer landing page
+Route::get('/buyer/landing', [ArtController::class, 'showBuyerLanding'])->name('buyer.landing');
 
