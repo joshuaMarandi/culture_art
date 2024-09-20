@@ -11,7 +11,7 @@
     @if($art->image)
     <img src="{{ asset('storage/' . $art->image) }}" alt="{{ $art->title }}" class="img-fluid">
     @else
-        <p>No image available.</p>
+        <p>No image available Try again later.</p>
     @endif
 </div>
 @endsection
