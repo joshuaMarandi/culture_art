@@ -22,7 +22,7 @@
     </div>
 
     <!-- Products Grid Section -->
-    <!-- <h2 class="text-center my-4">Browse Our Collection</h2> -->
+    <h2 class="text-center my-4">Browse Our Collection</h2>
 
     <!-- No products message -->
     @if($arts->isEmpty())
