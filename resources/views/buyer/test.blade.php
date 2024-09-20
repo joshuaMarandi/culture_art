@@ -39,7 +39,7 @@
                             <img src="{{ asset('storage/' . $art->image) }}" alt="{{ $art->title }}" class="h-full w-full object-cover">
                         @else
                             <div class="h-full w-full flex items-center justify-center text-gray-500">
-                                <!-- No Image  at this moment -->
+                                No Image  at this moment
                             </div>
                         @endif
                     </div>
