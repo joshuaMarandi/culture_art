@@ -9,17 +9,17 @@ use Illuminate\Support\Facades\Storage;
 
 class ArtController extends Controller
 {
-    // Display a listing of arts (publicly accessible)
+    // Display the buyer landing page with a list of arts (publicly accessible)
     public function showBuyerLanding()
-{
-    // Fetch arts with pagination
-    $arts = Art::with('category')->paginate(20);  // or adjust per your needs
+    {
+        // Fetch arts with related category data and paginate results (20 records per page)
+        $arts = Art::with('category')->paginate(20);
+        
+        // Optionally pass the seller details if needed (for authenticated users)
+        $seller = auth()->check() ? auth()->user() : null;
 
-    // Pass the 'arts' variable to the view
-    return view('buyer.landing', compact('arts'));
-}
-
-    
+        return view('buyer.landing', compact('arts', 'seller'));
+    }
 
     // Show the details of a specific art piece (publicly accessible)
     public function show($id)
@@ -29,20 +29,7 @@ class ArtController extends Controller
         return view('arts.show', compact('art'));
     }
 
-    // Show the buyer landing page (publicly accessible)
-   // ArtController.php
-public function showBuyerLanding()
-{
-    // Fetch all arts with related category data and paginate results
-    $arts = Art::with('category')->paginate(20); // Fetch 20 records per page
-    
-    // Pass the seller details if needed
-    $seller = auth()->user();
-
-    return view('buyer.landing', compact('arts', 'seller'));
-}
-
-    // Seller dashboard (protected by 'seller' role)
+    // Seller dashboard showing their own uploaded arts (protected by 'seller' role)
     public function dashboard()
     {
         // Fetch arts for the authenticated seller, eager load categories
@@ -50,16 +37,18 @@ public function showBuyerLanding()
         return view('seller.dashboard', compact('arts'));
     }
 
-    // Display the form for creating new art
+    // Display the form for creating a new art (accessible by seller)
     public function create()
     {
+        // Fetch all categories to display in the form
         $categories = Category::all();
         return view('arts.create', compact('categories'));
     }
 
-    // Store new art with image upload
+    // Store a new art piece, including image upload (accessible by seller)
     public function store(Request $request)
     {
+        // Validate the request data
         $validatedData = $request->validate([
             'title' => 'required',
             'description' => 'required',
@@ -68,32 +57,30 @@ public function showBuyerLanding()
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-
         // Handle image upload
-        $imagePath = null;
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('arts', 'public'); // Store image in the public disk
-        }
+        $imagePath = $request->file('image')->store('arts', 'public');
 
+        // Create and save the new art
         $art = new Art($validatedData);
-        $art->user_id = auth()->id();
-        $art->image = $imagePath;
+        $art->user_id = auth()->id(); // Assign the authenticated user as the owner
+        $art->image = $imagePath; // Store the image path
         $art->save();
 
         return redirect()->route('seller.dashboard')->with('success', 'Art created successfully');
     }
 
-    // Display the form for editing the specified art
+    // Display the form for editing an existing art piece (accessible by seller)
     public function edit($id)
     {
         $art = Art::findOrFail($id);
-        $categories = Category::all();
+        $categories = Category::all(); // Fetch categories for dropdown
         return view('arts.edit', compact('art', 'categories'));
     }
 
-    // Update existing art with image upload
+    // Update an existing art piece, including image upload (accessible by seller)
     public function update(Request $request, $id)
     {
+        // Validate the request data
         $validatedData = $request->validate([
             'title' => 'required',
             'description' => 'required',
@@ -104,23 +91,25 @@ public function showBuyerLanding()
 
         $art = Art::findOrFail($id);
 
-        // Handle image upload if a new one is provided
+        // Handle image upload if a new image is provided
         if ($request->hasFile('image')) {
             // Delete the old image if it exists
             if ($art->image) {
                 Storage::disk('public')->delete($art->image);
             }
 
-            $imagePath = $request->file('image')->store('arts', 'public'); // Store new image
-            $validatedData['image'] = $imagePath; // Save the new image path
+            // Store the new image
+            $imagePath = $request->file('image')->store('arts', 'public');
+            $validatedData['image'] = $imagePath;
         }
 
+        // Update the art piece with the validated data
         $art->update($validatedData);
 
         return redirect()->route('seller.dashboard')->with('success', 'Art updated successfully');
     }
 
-    // Delete the specified art
+    // Delete an art piece and its associated image (accessible by seller)
     public function destroy($id)
     {
         $art = Art::findOrFail($id);
@@ -130,6 +119,7 @@ public function showBuyerLanding()
             Storage::disk('public')->delete($art->image);
         }
 
+        // Delete the art record from the database
         $art->delete();
 
         return redirect()->route('seller.dashboard')->with('success', 'Art deleted successfully');
