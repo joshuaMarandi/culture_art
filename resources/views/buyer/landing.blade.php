@@ -4,10 +4,11 @@
 
 @section('content')
 <div class="container">
+
     <!-- Hero Section -->
     <div class="hero-section">
         <div class="hero-overlay">
-            <h1>Discover Amazing Artworks and Cultural Products</h1>
+            <h1>Discover Amazing Artworks and Cultural Products from all over the world</h1>
             <p>Browse through various art pieces created by talented artists.</p>
             
             <!-- Search Bar -->
@@ -20,12 +21,13 @@
         </div>
     </div>
 
-    
     <!-- Products Grid Section -->
     <h2 class="text-center my-4">Browse Our Collection</h2>
 
     <!-- No products message -->
-    @if(isset($arts) && $arts->isNotEmpty())
+    @if($arts->isEmpty())
+        <p class="no-products text-center">No artworks available at the moment. Please check back later.</p>
+    @else
         <div class="products-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 my-4">
             @foreach($arts as $art)
             <a href="{{ route('buyer.view_product', $art->id) }}" class="block product-link hover:shadow-lg transition duration-300 ease-in-out">
@@ -37,7 +39,7 @@
                             <img src="{{ asset('storage/' . $art->image) }}" alt="{{ $art->title }}" class="h-full w-full object-cover">
                         @else
                             <div class="h-full w-full flex items-center justify-center text-gray-500">
-                                No Image Available
+                                No Image  at this moment
                             </div>
                         @endif
                     </div>
@@ -57,8 +59,6 @@
         <div class="pagination-container my-4">
             {{ $arts->onEachSide(1)->links('vendor.pagination.simple-tailwind') }} <!-- Custom template -->
         </div>
-    @else
-        <p>No artworks available.</p>
     @endif
 
 </div>
