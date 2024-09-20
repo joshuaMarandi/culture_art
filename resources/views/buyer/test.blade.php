@@ -8,7 +8,7 @@
     <!-- Hero Section -->
     <div class="hero-section">
         <div class="hero-overlay">
-            <h1>Discover Amazing Artworks and Cultural Products</h1>
+            <h1>Discover Amazing Artworks and Cultural Products from all over the world</h1>
             <p>Browse through various art pieces created by talented artists.</p>
             
             <!-- Search Bar -->
