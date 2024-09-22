@@ -66,4 +66,5 @@ public function remove($id)
         return redirect()->back()->with('success', 'Cart cleared successfully!');
     }
     
+    
 }
