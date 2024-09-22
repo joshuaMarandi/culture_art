@@ -5,30 +5,28 @@
 @section('content')
 <div class="container">
 
-
     <!-- Hero Section -->
     <div class="hero-section">
         <div class="hero-overlay">
-            <h1>Discover Amazing Artworks and Cultural Products from all over the world</h1>
-            <p>Browse through various art pieces created by talented artists.</p>
+            <h1 class="text-orange-600">Discover Amazing Artworks and Cultural Products from all over the world</h1>
+            <p class="text-gray-800">Browse through various art pieces created by talented artists.</p>
 
             <!-- Search Bar -->
             <div class="search-bar-container">
                 <form action="{{ route('arts.index') }}" method="GET" class="search-bar-form">
                     <input type="text" name="search" placeholder="Search for art..." class="search-bar-input" aria-label="Search for art" value="{{ request('search') }}">
-                    <button type="submit" class="search-bar-button">Search</button>
+                    <button type="submit" class="search-bar-button bg-orange-500 text-white hover:bg-orange-600 transition duration-300">Search</button>
                 </form>
             </div>
-
         </div>
     </div>
 
     <!-- Products Grid Section -->
-    <h2 class="text-center my-4">Browse Our Collection</h2>
+    <h2 class="text-center my-4 text-orange-600">Browse Our Collection</h2>
 
     <!-- No products message -->
     @if($arts->isEmpty())
-    <p class="no-products text-center">No artworks available at the moment. Please check back later.</p>
+    <p class="no-products text-center text-orange-600">No artworks available at the moment. Please check back later.</p>
     @else
     <div class="products-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 my-4">
         @foreach($arts as $art)
@@ -48,9 +46,9 @@
 
                 <!-- Art Info -->
                 <div class="product-info p-4">
-                    <h2 class="text-lg font-semibold text-gray-800">{{ $art->title }}</h2>
+                    <h2 class="text-lg font-semibold text-orange-600">{{ $art->title }}</h2>
                     <p class="text-gray-600">{{ Str::limit($art->description, 80) }}</p>
-                    <p class="price text-indigo-500 font-bold mt-2">Tsh {{ number_format($art->price, 2) }}</p>
+                    <p class="price text-red-500 font-bold mt-2">Tsh {{ number_format($art->price, 2) }}</p>
                 </div>
             </div>
         </a>
