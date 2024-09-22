@@ -157,3 +157,9 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name
 // Route for buyer landing page
 Route::get('/buyer/landing', [ArtController::class, 'showBuyerLanding'])->name('buyer.landing');
 
+
+// routes/web.php
+
+Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+
