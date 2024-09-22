@@ -124,4 +124,26 @@ class ArtController extends Controller
 
         return redirect()->route('seller.dashboard')->with('success', 'Art deleted successfully');
     }
+    public function index(Request $request)
+{
+    $categoryId = $request->input('category_id');
+    $searchQuery = $request->input('search');
+
+    // Fetch arts based on category_id and search query
+    $artsQuery = Art::with('category');
+
+    if ($categoryId) {
+        $artsQuery->where('category_id', $categoryId);
+    }
+
+    if ($searchQuery) {
+        $artsQuery->where('title', 'like', '%' . $searchQuery . '%')
+                   ->orWhere('description', 'like', '%' . $searchQuery . '%');
+    }
+
+    $arts = $artsQuery->paginate(20);
+
+    return view('arts.index', compact('arts'));
+}
+
 }
