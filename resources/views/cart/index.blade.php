@@ -1,17 +1,15 @@
-<!-- resources/views/cart/index.blade.php -->
-
 @extends('layouts.app')
 
 @section('content')
 <div class="container">
-    <h1>Shopping Cart</h1>
-    @if(session('cart'))
+    <h1>Your Cart</h1>
+    @if(session('cart') && count(session('cart')) > 0)
         <table class="table">
             <thead>
                 <tr>
                     <th>Product</th>
-                    <th>Price</th>
                     <th>Quantity</th>
+                    <th>Price</th>
                     <th>Total</th>
                 </tr>
             </thead>
@@ -19,9 +17,9 @@
                 @foreach(session('cart') as $id => $item)
                     <tr>
                         <td>{{ $item['name'] }}</td>
-                        <td>${{ number_format($item['price'], 2) }}</td>
                         <td>{{ $item['quantity'] }}</td>
-                        <td>${{ number_format($item['price'] * $item['quantity'], 2) }}</td>
+                        <td>Tsh {{ number_format($item['price'], 2) }}</td>
+                        <td>Tsh {{ number_format($item['quantity'] * $item['price'], 2) }}</td>
                     </tr>
                 @endforeach
             </tbody>
