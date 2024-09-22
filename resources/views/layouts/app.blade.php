@@ -10,7 +10,7 @@
 <body>
     <!-- In your layout file, e.g., resources/views/layouts/app.blade.php -->
 <ul>
-    <li><a href="{{ route('cart.index') }}">Cart ({{ session('cart') ? count(session('cart')) : 0 }})</a></li>
+    <li><a href="{{ route('cart.index') }}">View Cart ({{ session('cart') ? count(session('cart')) : 0 }})</a></li>
 </ul>
 
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
