@@ -44,23 +44,26 @@ class CartController extends Controller
     }
 
     // Remove item from cart
-    public function remove($id)
-    {
-        $cart = session()->get('cart');
+    
+public function remove($id)
+{
+    // Get the current cart from the session
+    $cart = session()->get('cart');
 
-        if (isset($cart[$id])) {
-            unset($cart[$id]);
-            session()->put('cart', $cart);
-            return redirect()->back()->with('success', 'Product removed from cart successfully!');
-        }
-
-        return redirect()->back()->with('error', 'Product not found in cart.');
+    // If the cart exists and the item is in it, remove it
+    if (isset($cart[$id])) {
+        unset($cart[$id]);
+        session()->put('cart', $cart);
+        return redirect()->back()->with('success', 'Product removed from cart successfully!');
     }
 
+    return redirect()->back()->with('error', 'Product not found in cart.');
+}
     // Clear cart
     public function clear()
     {
         session()->forget('cart');
         return redirect()->back()->with('success', 'Cart cleared successfully!');
     }
+    
 }
