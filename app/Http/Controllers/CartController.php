@@ -1,10 +1,9 @@
 <?php
 
-// app/Http/Controllers/CartController.php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Art; // Make sure to include the Art model
 use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
@@ -42,5 +41,26 @@ class CartController extends Controller
     {
         $cart = session()->get('cart', []);
         return view('cart.index', compact('cart'));
+    }
+
+    // Remove item from cart
+    public function remove($id)
+    {
+        $cart = session()->get('cart');
+
+        if (isset($cart[$id])) {
+            unset($cart[$id]);
+            session()->put('cart', $cart);
+            return redirect()->back()->with('success', 'Product removed from cart successfully!');
+        }
+
+        return redirect()->back()->with('error', 'Product not found in cart.');
+    }
+
+    // Clear cart
+    public function clear()
+    {
+        session()->forget('cart');
+        return redirect()->back()->with('success', 'Cart cleared successfully!');
     }
 }
