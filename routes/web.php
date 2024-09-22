@@ -144,7 +144,7 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
 // Ensure logout is handled
 Route::post('/logout', function () {
     Auth::logout();
-    return redirect('/');
+    return redirect('buyer/landing');
 })->name('logout');
 
 // Homepage route for guests
@@ -166,3 +166,10 @@ Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
 
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
+
+
+
+Route::post('/logout', function () {
+    Auth::logout();
+    return redirect()->route('buyer.landing'); // Redirect to buyer landing page
+})->name('logout');
