@@ -36,7 +36,7 @@ class ProductController extends Controller
     public function showBuyerLanding(Request $request)
     {
         // Fetch artworks from the database with pagination
-        $arts = Art::paginate(12);
+        $arts = Art::paginate(40);
 
         // Pass the data to the view
         return view('buyer.landing', compact('arts'));

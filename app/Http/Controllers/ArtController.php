@@ -141,7 +141,7 @@ class ArtController extends Controller
                    ->orWhere('description', 'like', '%' . $searchQuery . '%');
     }
 
-    $arts = $artsQuery->paginate(20);
+    $arts = $artsQuery->paginate(40);
 
     return view('arts.index', compact('arts'));
 }
