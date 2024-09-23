@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Guest Layout')</title>
+    <title>@yield('title', 'Landing Page')</title>
     <!-- Vite CSS and JavaScript -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <!-- Favicon -->

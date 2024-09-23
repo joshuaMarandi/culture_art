@@ -101,6 +101,7 @@ Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
 
 // routes/web.php
 Route::post('/products/{product}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
 
 
 
@@ -173,3 +174,7 @@ Route::post('/logout', function () {
     Auth::logout();
     return redirect()->route('buyer.landing'); // Redirect to buyer landing page
 })->name('logout');
+
+Route::post('/checkout', [CheckoutController::class, 'process'])->name('checkout.process');
+
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
