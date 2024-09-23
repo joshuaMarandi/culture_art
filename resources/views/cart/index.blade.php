@@ -40,7 +40,7 @@
         </form>
         <a href="{{ route('checkout.index') }}" class="btn btn-primary">Proceed to Checkout</a>
     @else
-        <p>Your cart is empty.</p>
+        <p>Your cart is empty. Don't you believe</p>
     @endif
 </div>
 @endsection
