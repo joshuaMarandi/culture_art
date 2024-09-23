@@ -178,3 +178,10 @@ Route::post('/logout', function () {
 Route::post('/checkout', [CheckoutController::class, 'process'])->name('checkout.process');
 
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+
+
+
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+
+Route::post('/cart/add', [CheckoutController::class, 'addToCart'])->name('cart.add');
+Route::delete('/cart/remove/{id}', [CheckoutController::class, 'removeFromCart'])->name('cart.remove');

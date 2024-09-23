@@ -38,7 +38,7 @@
             @csrf
             <button type="submit" class="btn btn-warning">Clear Cart</button>
         </form>
-        <a href="{{ route('checkout') }}" class="btn btn-primary">Proceed to Checkout</a>
+        <a href="{{ route('checkout.index') }}" class="btn btn-primary">Proceed to Checkout</a>
     @else
         <p>Your cart is empty.</p>
     @endif
