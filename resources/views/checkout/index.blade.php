@@ -2,33 +2,43 @@
 
 @section('content')
 <div class="container">
-    <h1>Checkout</h1>
+    <h2>Checkout</h2>
     
-    @if(session('error'))
-        <div class="alert alert-danger">
-            {{ session('error') }}
-        </div>
-    @endif
+    @if(!empty($cartItems) && count($cartItems) > 0)
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Subtotal</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($cartItems as $id => $item)
+                <tr>
+                    <td>{{ $item['name'] }}</td>
+                    <td>{{ $item['quantity'] }}</td>
+                    <td>{{ number_format($item['price'], 2) }}</td>
+                    <td>{{ number_format($item['price'] * $item['quantity'], 2) }}</td>
+                    <td>
+                        <form action="{{ route('cart.remove', $id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
 
-    <div class="row">
-        <div class="col-md-8">
-            <h2>Your Cart</h2>
-
-            @foreach($cartItems as $item)
-                <div class="cart-item mb-3">
-                    <h5>{{ $item->name }}</h5>
-                    <p>Quantity: {{ $item->qty }}</p>
-                    <p>Price: Tsh {{ number_format($item->price, 2) }}</p>
-                </div>
-            @endforeach
-        </div>
+        <h4>Total: Tsh {{ number_format($total, 2) }}</h4>
         
-        <div class="col-md-4">
-            <h2>Order Summary</h2>
-            <p>Total: Tsh {{ number_format($total, 2) }}</p>
-
-            <a href="{{ route('checkout.process') }}" class="btn btn-primary">Proceed to Payment</a>
-        </div>
-    </div>
+        <button class="btn btn-primary">Proceed to Payment</button>
+    @else
+        <p>Your cart is empty.</p>
+    @endif
 </div>
 @endsection
