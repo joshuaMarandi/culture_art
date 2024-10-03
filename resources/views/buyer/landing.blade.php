@@ -10,7 +10,6 @@
         <div class="hero-overlay">
             <h1 class="text-orange-600">Discover Amazing Artworks and Cultural Products from all over the world</h1>
             <p class="text-gray-800">Browse through various art pieces created by talented artists.</p>
-
             <!-- Search Bar -->
             <div class="search-bar-container">
                 <form action="{{ route('arts.index') }}" method="GET" class="search-bar-form">
@@ -20,6 +19,7 @@
             </div>
         </div>
     </div>
+
 
     <!-- Products Grid Section -->
     <h2 class="text-center my-4 text-orange-600">Browse Our Collection</h2>

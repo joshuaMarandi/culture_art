@@ -4,6 +4,7 @@
 <div class="container">
     <h1>Your Cart</h1>
     
+    
     @if(session('cart') && count(session('cart')) > 0)
         <table class="table">
             <thead>
