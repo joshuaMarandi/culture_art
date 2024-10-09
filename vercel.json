@@ -6,7 +6,7 @@
         "use": "@vercel/php"
       },
       {
-        "src": "resources/js/*",
+        "src": "package.json",
         "use": "@vercel/static-build",
         "config": {
           "distDir": "public"
