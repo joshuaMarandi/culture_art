@@ -34,14 +34,13 @@
                 @endforeach
             </tbody>
         </table>
-        
         <form action="{{ route('cart.clear') }}" method="POST" class="mt-3">
             @csrf
             <button type="submit" class="btn btn-warning">Clear Cart</button>
         </form>
         <a href="{{ route('checkout.index') }}" class="btn btn-primary">Proceed to Checkout</a>
     @else
-        <p>Your cart is empty. Don't you believe</p>
+        <p>Your cart is empty. Go get your best product</p>
     @endif
 </div>
 @endsection

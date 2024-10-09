@@ -1,0 +1,23 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "index.php",
+        "use": "@vercel/php"
+      },
+      {
+        "src": "resources/js/*",
+        "use": "@vercel/static-build",
+        "config": {
+          "distDir": "public"
+        }
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "/index.php"
+      }
+    ]
+  }
+  
