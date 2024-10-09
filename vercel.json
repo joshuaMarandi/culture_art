@@ -2,7 +2,7 @@
     "version": 2,
     "builds": [
       {
-        "src": "index.php",
+        "src": "public/index.php",
         "use": "@vercel/php"
       },
       {
@@ -16,8 +16,20 @@
     "routes": [
       {
         "src": "/(.*)",
-        "dest": "/index.php"
+        "dest": "/public/index.php"
       }
-    ]
+    ],
+    "env": {
+      "APP_ENV": "production",
+      "APP_DEBUG": "false",
+      "APP_KEY": "@APP_KEY", 
+      "DB_CONNECTION": "@DB_CONNECTION", 
+      "DB_HOST": "@DB_HOST", 
+      "DB_PORT": "@DB_PORT", 
+      "DB_DATABASE": "@DB_DATABASE", 
+      "DB_USERNAME": "@DB_USERNAME", 
+      "DB_PASSWORD": "@DB_PASSWORD",
+      "APP_URL": "https://culture-art2.vercel.app"
+    }
   }
   
