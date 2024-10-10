@@ -16,7 +16,7 @@
     "routes": [
       {
         "src": "/(.*)",
-        "dest": "/public/resources/views\buyer/landing.blade.php"
+        "dest": "/public/resources/views/buyer/landing.blade.php"
       }
     ],
     "env": {
