@@ -3,6 +3,7 @@
 @section('content')
 <div class="container">
     <h2>Checkout</h2>
+    <h2>Checkout</h2>
     
     @if(!empty($cartItems) && count($cartItems) > 0)
         <table class="table">
